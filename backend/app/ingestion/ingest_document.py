@@ -4,10 +4,7 @@ from ingestion.chunker import chunk_text
 
 from embeddings import generate_embeddings
 from storage.vector_store import store_chunks
-
-from config import CONTRACTS_DIR
-
-pdf_path=CONTRACTS_DIR/"sample4.pdf"
+from storage.chunk_store import save_chunks 
 
 def ingest_document(pdf_path):
     try:
@@ -25,6 +22,8 @@ def ingest_document(pdf_path):
 
         if chunks is None:
             return None
+        
+        save_chunks(chunks)
 
         embeddings = generate_embeddings(chunks)
 

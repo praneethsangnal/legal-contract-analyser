@@ -1,12 +1,31 @@
-from embeddings import generate_embeddings
-from vector_store import retrieve_chunks
+from retrieval.vector_retriever import search as vector_search
+from retrieval.bm25_retriever import search as bm25_search
+from retrieval.rrf import reciprocal_rank_fusion
+query = "What are the confidentiality obligations of the receiving party?"
 
-query="What level of care or diligence must the receiving party use to protect the secret data from leaking"
+print("\n===== VECTOR SEARCH =====\n")
 
-query_embedding=generate_embeddings(query)
+vector_results = vector_search(query)
 
-results=retrieve_chunks(query_embedding)
+for result in vector_results:
+    print(result["id"], result["rank"])
 
-for i, doc in enumerate(results["documents"][0], start=1):
-    print(f"\nRESULT {i}\n")
-    print(doc)
+
+
+print("\n===== BM25 SEARCH =====\n")
+
+bm25_results = bm25_search(query)
+
+for result in bm25_results:
+    print(result["id"], result["rank"])
+
+
+print("\n===== RRF SEARCH =====\n")
+
+rrf_results = reciprocal_rank_fusion(
+    vector_results,
+    bm25_results
+)
+
+for result in rrf_results[:10]:
+    print(result["id"])

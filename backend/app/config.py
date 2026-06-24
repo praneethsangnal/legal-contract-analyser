@@ -7,3 +7,5 @@ DATA_DIR = PROJECT_ROOT / "data"
 CONTRACTS_DIR = DATA_DIR / "contracts"
 
 CHROMA_DB_DIR = PROJECT_ROOT / "chroma_db"
+
+PROCESSED_DIR=DATA_DIR/"processed"
