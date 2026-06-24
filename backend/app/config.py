@@ -1,7 +1,9 @@
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-DATA_DIR = BASE_DIR / "data"
+DATA_DIR = PROJECT_ROOT / "data"
 
 CONTRACTS_DIR = DATA_DIR / "contracts"
+
+CHROMA_DB_DIR = PROJECT_ROOT / "chroma_db"
