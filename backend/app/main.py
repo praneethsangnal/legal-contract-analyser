@@ -6,7 +6,8 @@ from retrieval.vector_retriever import search as vector_search
 from retrieval.bm25_retriever import search as bm25_search
 from retrieval.rrf import reciprocal_rank_fusion
 from retrieval.reranker import rerank
-from llm.groq_client import generate_answer
+from llm.question_answer import generate_answer
+from llm.summary import generate_summary
 
 from config import CONTRACTS_DIR
 
@@ -115,3 +116,20 @@ def ask_question(request: QuestionRequest):
             "error": str(e)
         }
     
+
+@app.post("/summary")
+def contract_summary():
+
+    try:
+
+        summary = generate_summary()
+
+        return {
+            "summary": summary
+        }
+
+    except Exception as e:
+
+        return {
+            "error": str(e)
+        }
