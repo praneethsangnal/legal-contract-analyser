@@ -8,6 +8,7 @@ from retrieval.rrf import reciprocal_rank_fusion
 from retrieval.reranker import rerank
 from llm.question_answer import generate_answer
 from llm.summary import generate_summary
+from llm.risk_analysis import generate_risk_analysis
 
 from config import CONTRACTS_DIR
 
@@ -126,6 +127,24 @@ def contract_summary():
 
         return {
             "summary": summary
+        }
+
+    except Exception as e:
+
+        return {
+            "error": str(e)
+        }
+    
+    
+@app.post("/risk-analysis")
+def risk_analysis():
+
+    try:
+
+        report = generate_risk_analysis()
+
+        return {
+            "risk_analysis": report
         }
 
     except Exception as e:

@@ -2,6 +2,7 @@ function QuestionSection({
   question,
   setQuestion,
   handleAsk,
+  uploaded,
 }) {
   return (
     <section>
@@ -18,7 +19,10 @@ function QuestionSection({
       <br />
       <br />
 
-      <button onClick={handleAsk}>
+      <button
+        onClick={handleAsk}
+        disabled={!uploaded}
+      >
         Ask
       </button>
 

@@ -4,6 +4,7 @@ from retrieval.rrf import reciprocal_rank_fusion
 from retrieval.reranker import rerank
 from llm.question_answer import generate_answer
 from llm.summary import generate_summary
+from llm.risk_analysis import generate_risk_analysis
 
 query = "what is the termination period"
 
@@ -37,4 +38,10 @@ print()
 
 summary=generate_summary()
 print(summary)
+
+print()
+
+risk_analysis=generate_risk_analysis()
+
+print(risk_analysis)
 
