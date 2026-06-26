@@ -17,6 +17,7 @@ function App() {
   const [summary, setSummary] = useState("");
   const [riskAnalysis, setRiskAnalysis] = useState("");
   const [contractUploaded, setContractUploaded] = useState(false);
+  const [found, setFound] = useState(false);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -27,6 +28,7 @@ function App() {
     setQuestion("");
     setAnswer("");
     setSources([]);
+    setFound(false);
   };
 
   const handleUpload = async () => {
@@ -55,6 +57,7 @@ function App() {
       setQuestion("");
       setAnswer("");
       setSources([]);
+      setFound(false);
     } catch (error) {
       console.error(error);
       setMessage("Upload Failed");
@@ -129,6 +132,7 @@ function App() {
 
       const data = await response.json();
       setAnswer(data.answer);
+      setFound(data.found);
       setSources(data.sources);
     } catch (error) {
       console.error(error);
@@ -171,9 +175,11 @@ function App() {
         answer={answer}
       />
 
-      <SourcesSection
-        sources={sources}
-      />
+      {found && sources.length > 0 && (
+        <SourcesSection
+          sources={sources}
+        />
+      )}
     </div>
   );
 }

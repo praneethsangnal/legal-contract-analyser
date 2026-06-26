@@ -2,24 +2,22 @@ function SourcesSection({ sources }) {
   return (
     <section>
 
-      <h2>Sources</h2>
+      <h2>Evidence</h2>
 
       {
-        sources.length === 0
-          ? (
-              <p>No sources available.</p>
-            )
-          : (
-              <ul>
-                {
-                  sources.map((source) => (
-                    <li key={source.chunk_id}>
-                      {source.chunk_id} ({(source.score * 100).toFixed(2)}%)
-                    </li>
-                  ))
-                }
-              </ul>
-            )
+        sources.map((source, index) => (
+
+          <div key={index}>
+
+            <h3>{source.title}</h3>
+
+            <p>{source.text}</p>
+
+            <hr />
+
+          </div>
+
+        ))
       }
 
     </section>

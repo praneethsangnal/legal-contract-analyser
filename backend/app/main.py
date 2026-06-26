@@ -1,6 +1,6 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from pydantic import BaseModel
-
+from fastapi.middleware.cors import CORSMiddleware
 from ingestion.ingest_document import ingest_document
 from retrieval.vector_retriever import search as vector_search
 from retrieval.bm25_retriever import search as bm25_search
@@ -9,10 +9,7 @@ from retrieval.reranker import rerank
 from llm.question_answer import generate_answer
 from llm.summary import generate_summary
 from llm.risk_analysis import generate_risk_analysis
-
 from config import CONTRACTS_DIR
-
-from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -40,7 +37,6 @@ def home():
 @app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     try:
-
         CONTRACTS_DIR.mkdir(
             parents=True,
             exist_ok=True
@@ -69,7 +65,6 @@ async def upload_pdf(file: UploadFile = File(...)):
 @app.post("/ask")
 def ask_question(request: QuestionRequest):
     try:
-
         query = request.question
 
         vector_results = vector_search(
@@ -98,17 +93,25 @@ def ask_question(request: QuestionRequest):
             reranked_results=reranked_results
         )
 
-        sources = [
-            {
-                "chunk_id": result["id"],
-                "score": float(result["score"])
-            }
-            for result in reranked_results
-        ]
+        found = (
+            answer.strip() != "I could not find this information in the contract."
+        )
+
+        sources = []
+
+        if found:
+            for i, result in enumerate(reranked_results):
+                sources.append(
+                    {
+                        "title": f"Evidence {i + 1}",
+                        "text": result["text"]
+                    }
+                )
 
         return {
             "question": query,
             "answer": answer,
+            "found": found,
             "sources": sources
         }
 
@@ -120,9 +123,7 @@ def ask_question(request: QuestionRequest):
 
 @app.post("/summary")
 def contract_summary():
-
     try:
-
         summary = generate_summary()
 
         return {
@@ -130,7 +131,6 @@ def contract_summary():
         }
 
     except Exception as e:
-
         return {
             "error": str(e)
         }
@@ -138,9 +138,7 @@ def contract_summary():
     
 @app.post("/risk-analysis")
 def risk_analysis():
-
     try:
-
         report = generate_risk_analysis()
 
         return {
@@ -148,7 +146,6 @@ def risk_analysis():
         }
 
     except Exception as e:
-
         return {
             "error": str(e)
         }
