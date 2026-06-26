@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Header from "./components/Header";
 import UploadSection from "./components/UploadSection";
+import DocumentInfoSection from "./components/DocumentInfoSection";
 import SummarySection from "./components/SummarySection";
 import RiskAnalysisSection from "./components/RiskAnalysisSection";
 import QuestionSection from "./components/QuestionSection";
@@ -18,6 +19,7 @@ function App() {
   const [riskAnalysis, setRiskAnalysis] = useState("");
   const [contractUploaded, setContractUploaded] = useState(false);
   const [found, setFound] = useState(false);
+  const [documentInfo, setDocumentInfo] = useState(null);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -29,6 +31,7 @@ function App() {
     setAnswer("");
     setSources([]);
     setFound(false);
+    setDocumentInfo(null);
   };
 
   const handleUpload = async () => {
@@ -50,36 +53,41 @@ function App() {
       );
 
       const data = await response.json();
+
       setMessage(data.message);
       setContractUploaded(true);
+
       setSummary("");
       setRiskAnalysis("");
       setQuestion("");
       setAnswer("");
       setSources([]);
       setFound(false);
+
+      setDocumentInfo(data.result);
+
     } catch (error) {
       console.error(error);
       setMessage("Upload Failed");
       setContractUploaded(false);
+      setDocumentInfo(null);
     }
   };
 
   const handleSummary = async () => {
-    if (!contractUploaded) {
-      return;
-    }
+    if (!contractUploaded) return;
 
     try {
       const response = await fetch(
         "http://127.0.0.1:8000/summary",
         {
-          method: "POST"
+          method: "POST",
         }
       );
 
       const data = await response.json();
       setSummary(data.summary);
+
     } catch (error) {
       console.error(error);
       setSummary("Failed to generate summary.");
@@ -87,20 +95,19 @@ function App() {
   };
 
   const handleRiskAnalysis = async () => {
-    if (!contractUploaded) {
-      return;
-    }
+    if (!contractUploaded) return;
 
     try {
       const response = await fetch(
         "http://127.0.0.1:8000/risk-analysis",
         {
-          method: "POST"
+          method: "POST",
         }
       );
 
       const data = await response.json();
       setRiskAnalysis(data.risk_analysis);
+
     } catch (error) {
       console.error(error);
       setRiskAnalysis("Failed to generate risk analysis.");
@@ -108,13 +115,9 @@ function App() {
   };
 
   const handleAsk = async () => {
-    if (!contractUploaded) {
-      return;
-    }
+    if (!contractUploaded) return;
 
-    if (!question.trim()) {
-      return;
-    }
+    if (!question.trim()) return;
 
     try {
       const response = await fetch(
@@ -131,18 +134,22 @@ function App() {
       );
 
       const data = await response.json();
+
       setAnswer(data.answer);
       setFound(data.found);
       setSources(data.sources);
+
     } catch (error) {
       console.error(error);
       setAnswer("Failed to get answer.");
       setSources([]);
+      setFound(false);
     }
   };
 
   return (
     <div>
+
       <Header />
 
       <UploadSection
@@ -150,6 +157,11 @@ function App() {
         message={message}
         handleFileChange={handleFileChange}
         handleUpload={handleUpload}
+      />
+
+      <DocumentInfoSection
+        file={file}
+        documentInfo={documentInfo}
       />
 
       <SummarySection
@@ -180,6 +192,7 @@ function App() {
           sources={sources}
         />
       )}
+
     </div>
   );
 }
