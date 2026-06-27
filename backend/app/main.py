@@ -17,7 +17,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
     "http://localhost:5173",
-    "https://legal-contract-analyser.vercel.app"
+    "https://legal-contract-analyser-one.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
