@@ -1,6 +1,6 @@
 import chromadb
 
-from config import CHROMA_DB_DIR
+from app.config import CHROMA_DB_DIR
 
 client = chromadb.PersistentClient(
     path=str(CHROMA_DB_DIR)

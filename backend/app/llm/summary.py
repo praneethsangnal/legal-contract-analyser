@@ -1,5 +1,5 @@
-from llm.groq_client import client
-from storage.chunk_store import load_chunks
+from app.llm.groq_client import client
+from app.storage.chunk_store import load_chunks
 
 
 def generate_summary():

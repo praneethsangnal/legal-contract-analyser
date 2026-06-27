@@ -1,6 +1,6 @@
 from rank_bm25 import BM25Okapi
 
-from storage.chunk_store import load_chunks
+from app.storage.chunk_store import load_chunks
 
 def search(query, n_results=10):
     try:

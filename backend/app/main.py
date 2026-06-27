@@ -1,15 +1,15 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from ingestion.ingest_document import ingest_document
-from retrieval.vector_retriever import search as vector_search
-from retrieval.bm25_retriever import search as bm25_search
-from retrieval.rrf import reciprocal_rank_fusion
-from retrieval.reranker import rerank
-from llm.question_answer import generate_answer
-from llm.summary import generate_summary
-from llm.risk_analysis import generate_risk_analysis
-from config import CONTRACTS_DIR
+from app.ingestion.ingest_document import ingest_document
+from app.retrieval.vector_retriever import search as vector_search
+from app.retrieval.bm25_retriever import search as bm25_search
+from app.retrieval.rrf import reciprocal_rank_fusion
+from app.retrieval.reranker import rerank
+from app.llm.question_answer import generate_answer
+from app.llm.summary import generate_summary
+from app.llm.risk_analysis import generate_risk_analysis
+from app.config import CONTRACTS_DIR
 
 app = FastAPI()
 

@@ -1,5 +1,5 @@
-from embeddings import generate_embeddings
-from storage.vector_store import retrieve_chunks
+from app.embeddings import generate_embeddings
+from app.storage.vector_store import retrieve_chunks
 
 
 def search(query, n_results=10):

@@ -1,14 +1,14 @@
 import time
 import fitz
 
-from ingestion.pdf_extractor import extract_text_from_pdf
-from ingestion.ocr_extractor import extract_text_using_ocr
-from ingestion.text_processor import clean_text
-from ingestion.chunker import chunk_text
+from app.ingestion.pdf_extractor import extract_text_from_pdf
+from app.ingestion.ocr_extractor import extract_text_using_ocr
+from app.ingestion.text_processor import clean_text
+from app.ingestion.chunker import chunk_text
 
-from embeddings import generate_embeddings
-from storage.vector_store import store_chunks
-from storage.chunk_store import save_chunks
+from app.embeddings import generate_embeddings
+from app.storage.vector_store import store_chunks
+from app.storage.chunk_store import save_chunks
 
 
 def ingest_document(pdf_path):

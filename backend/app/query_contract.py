@@ -1,11 +1,11 @@
-from retrieval.vector_retriever import search as vector_search
-from retrieval.bm25_retriever import search as bm25_search
-from retrieval.rrf import reciprocal_rank_fusion
-from retrieval.reranker import rerank
-from llm.question_answer import generate_answer
-from llm.summary import generate_summary
-from llm.risk_analysis import generate_risk_analysis
-from ingestion.ocr_extractor import extract_text_using_ocr
+from app.retrieval.vector_retriever import search as vector_search
+from app.retrieval.bm25_retriever import search as bm25_search
+from app.retrieval.rrf import reciprocal_rank_fusion
+from app.retrieval.reranker import rerank
+from app.llm.question_answer import generate_answer
+from app.llm.summary import generate_summary
+from app.llm.risk_analysis import generate_risk_analysis
+from app.ingestion.ocr_extractor import extract_text_using_ocr
 
 # query = "what is the termination period"
 

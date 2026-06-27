@@ -1,4 +1,4 @@
-from llm.groq_client import client
+from app.llm.groq_client import client
 
 def generate_answer(query: str, reranked_results: list) -> str:
     if not reranked_results:
