@@ -20,7 +20,7 @@ def extract_text_using_ocr(pdf_path):
             page = document.load_page(page_number)
 
             # Render page as image
-            pix = page.get_pixmap(dpi=300)
+            pix = page.get_pixmap(dpi=150)
 
             image = np.frombuffer(
                 pix.samples,
