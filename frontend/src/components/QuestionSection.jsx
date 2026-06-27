@@ -1,32 +1,79 @@
+// function QuestionSection({
+//   question,
+//   setQuestion,
+//   handleAsk,
+//   uploaded,
+// }) {
+//   return (
+//     <section>
+
+//       <h2>Ask a Question</h2>
+
+//       <input
+//         type="text"
+//         placeholder="Enter your question..."
+//         value={question}
+//         onChange={(e) => setQuestion(e.target.value)}
+//       />
+
+//       <br />
+//       <br />
+
+//       <button
+//         onClick={handleAsk}
+//         disabled={!uploaded}
+//       >
+//         Ask
+//       </button>
+
+//       <hr />
+
+//     </section>
+//   );
+// }
+
+// export default QuestionSection;
+
 function QuestionSection({
   question,
   setQuestion,
   handleAsk,
   uploaded,
+  isLoading,
 }) {
   return (
-    <section>
+    <section className="section">
 
-      <h2>Ask a Question</h2>
+      <div className="section__header">
+        <h2 className="section__title">
+          <span className="section__title-icon">💬</span>
+          Ask a Question
+        </h2>
+      </div>
 
-      <input
-        type="text"
-        placeholder="Enter your question..."
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-      />
+      <div className="question-row">
+        <input
+          className="text-input"
+          type="text"
+          placeholder={
+            uploaded
+              ? "Enter your question..."
+              : "Upload a contract to ask questions"
+          }
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          disabled={!uploaded}
+        />
 
-      <br />
-      <br />
-
-      <button
-        onClick={handleAsk}
-        disabled={!uploaded}
-      >
-        Ask
-      </button>
-
-      <hr />
+        <button
+          className="btn btn-primary"
+          onClick={handleAsk}
+          disabled={!uploaded || isLoading}
+        >
+          {isLoading && <span className="spinner" />}
+          {isLoading ? "Asking..." : "Ask"}
+        </button>
+      </div>
 
     </section>
   );

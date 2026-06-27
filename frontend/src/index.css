@@ -1,5 +1,136 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+
+/* ============================================
+   Reset
+   ============================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* ============================================
+   Design tokens
+   ============================================ */
+:root {
+  /* Color */
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-muted: #f4f5f7;
+  --border: #e3e6eb;
+  --border-strong: #d3d7de;
+
+  --text-primary: #14181f;
+  --text-secondary: #5b6371;
+  --text-tertiary: #8b93a1;
+
+  --accent: #3a4ee0;
+  --accent-hover: #2f3fc0;
+  --accent-soft: #ecefff;
+  --accent-soft-border: #d6dbfb;
+
+  --risk: #c4391f;
+  --risk-soft: #fdeeea;
+  --risk-soft-border: #f6cfc4;
+
+  --success: #1a7f5a;
+  --success-soft: #e9f7f0;
+
+  /* Type */
+  --font-sans: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial,
+    sans-serif;
+  --font-mono: "SF Mono", "Roboto Mono", Consolas, "Liberation Mono",
+    monospace;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(20, 24, 31, 0.04);
+  --shadow-md: 0 4px 16px rgba(20, 24, 31, 0.06);
+  --shadow-lg: 0 12px 32px rgba(20, 24, 31, 0.10);
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+/* ============================================
+   Base
+   ============================================ */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+p {
+  color: var(--text-primary);
+}
+
+button,
+input {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+hr {
+  display: none; /* dividers are handled with CSS borders now */
+}
+
+/* Accessible focus ring across the app */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
