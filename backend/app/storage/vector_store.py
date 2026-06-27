@@ -1,6 +1,10 @@
 import chromadb
+
 from config import CHROMA_DB_DIR
-client = chromadb.PersistentClient(path=str(CHROMA_DB_DIR))
+
+client = chromadb.PersistentClient(
+    path=str(CHROMA_DB_DIR)
+)
 
 collection = client.get_or_create_collection(
     name="legal_contracts"
@@ -9,7 +13,14 @@ collection = client.get_or_create_collection(
 
 def store_chunks(chunks, embeddings):
     try:
-        ids = [f"chunk_{i}" for i in range(len(chunks))]
+
+        # Remove the previously uploaded contract
+        collection.delete(where={})
+
+        ids = [
+            f"chunk_{i}"
+            for i in range(len(chunks))
+        ]
 
         collection.add(
             ids=ids,
@@ -25,6 +36,7 @@ def store_chunks(chunks, embeddings):
 
 def retrieve_chunks(query_embedding, n_results=5):
     try:
+
         results = collection.query(
             query_embeddings=[query_embedding.tolist()],
             n_results=n_results

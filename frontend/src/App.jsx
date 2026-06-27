@@ -215,6 +215,8 @@ import QuestionSection from "./components/QuestionSection";
 import AnswerSection from "./components/AnswerSection";
 import SourcesSection from "./components/SourcesSection";
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 function App() {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
@@ -227,8 +229,6 @@ function App() {
   const [found, setFound] = useState(false);
   const [documentInfo, setDocumentInfo] = useState(null);
 
-  // UI-only loading flags, used purely to drive spinners. They do not
-  // affect any existing state, logic, or network calls.
   const [isUploading, setIsUploading] = useState(false);
   const [isSummaryLoading, setIsSummaryLoading] = useState(false);
   const [isRiskLoading, setIsRiskLoading] = useState(false);
@@ -259,7 +259,7 @@ function App() {
     setIsUploading(true);
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/upload",
+        `${API_URL}/upload`,
         {
           method: "POST",
           body: formData,
@@ -270,16 +270,13 @@ function App() {
 
       setMessage(data.message);
       setContractUploaded(true);
-
       setSummary("");
       setRiskAnalysis("");
       setQuestion("");
       setAnswer("");
       setSources([]);
       setFound(false);
-
       setDocumentInfo(data.result);
-
     } catch (error) {
       console.error(error);
       setMessage("Upload Failed");
@@ -296,7 +293,7 @@ function App() {
     setIsSummaryLoading(true);
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/summary",
+        `${API_URL}/summary`,
         {
           method: "POST",
         }
@@ -304,7 +301,6 @@ function App() {
 
       const data = await response.json();
       setSummary(data.summary);
-
     } catch (error) {
       console.error(error);
       setSummary("Failed to generate summary.");
@@ -319,7 +315,7 @@ function App() {
     setIsRiskLoading(true);
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/risk-analysis",
+        `${API_URL}/risk-analysis`,
         {
           method: "POST",
         }
@@ -327,7 +323,6 @@ function App() {
 
       const data = await response.json();
       setRiskAnalysis(data.risk_analysis);
-
     } catch (error) {
       console.error(error);
       setRiskAnalysis("Failed to generate risk analysis.");
@@ -344,7 +339,7 @@ function App() {
     setIsAsking(true);
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/ask",
+        `${API_URL}/ask`,
         {
           method: "POST",
           headers: {
@@ -361,7 +356,6 @@ function App() {
       setAnswer(data.answer);
       setFound(data.found);
       setSources(data.sources);
-
     } catch (error) {
       console.error(error);
       setAnswer("Failed to get answer.");
@@ -374,11 +368,9 @@ function App() {
 
   return (
     <div className="app">
-
       <Header />
 
       <div className="app__container">
-
         <UploadSection
           file={file}
           message={message}
@@ -423,9 +415,7 @@ function App() {
             sources={sources}
           />
         )}
-
       </div>
-
     </div>
   );
 }
