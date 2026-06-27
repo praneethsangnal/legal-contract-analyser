@@ -1,6 +1,6 @@
 import json
 
-from config import PROCESSED_DIR
+from app.config import PROCESSED_DIR
 
 
 def save_chunks(chunks):
